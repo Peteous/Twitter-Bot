@@ -4,6 +4,10 @@ except ImportError:
 	import os
 	os.system("python get-pip.py --user")
 	os.system("pip install --ignore-installed tweepy --user")
+	try:
+		import tweepy
+	except ImportError:
+		print("An error occurred with importing Twitter\'s API")
 
 import time
 from random import randint
