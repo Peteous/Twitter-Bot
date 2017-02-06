@@ -5,6 +5,9 @@ except ImportError:
 	os.system("python get-pip.py --user")
 	os.system("pip install --ignore-installed tweepy --user")
 
+import time
+from random import randint
+
 # The consumer keys can be found on your application's Details
 # page located at https://dev.twitter.com/apps (under "OAuth settings")
 consumer_key=""
@@ -20,3 +23,26 @@ auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_token_secret)
 
 api = tweepy.API(auth)
+
+__tweetList = ["What is a git and how do I eat one? I'm a python.","Can a mouse be parsed? I'm a python.","I don't string parse, I slither. I'm a python.","Just adaded a commit to a repo. I'm a python."]
+__oopsList = ["Oops!","Oops","Gee Wiz!","Darn."]
+__errorOccured = ["Was error found.","I rattled my rattler.","Sssssthtthssss","I forgot parseltongue."]
+try:
+	for string in __tweetList:
+		api.update_status(string)
+		print(string)
+		__tweetList.remove(string)
+		__tweetList.append(string)
+		time.sleep(900)
+except tweepy.error.TweepError:
+	print('That tweet has already been tweeted')
+	try:
+		__status = __oopsList[randint(0,len(__errorOccured))] + " " + __errorOccured[randint(0,len(__errorOccured))] + " I'm a python."
+		api.update_status(__status)
+	except TweepError:
+		print('Something is boggled')
+		__status = ""
+		for index in range(0,randint(1,5)):
+			__status += "Bother "
+		__status += ". I'm a python."
+		api.update_status(__status)
