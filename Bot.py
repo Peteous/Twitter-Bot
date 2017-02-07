@@ -9,7 +9,6 @@ except ImportError:
 	except ImportError as e:
 		print("An error occurred with importing Twitter\'s API")
 		print(e.reason)
-		break
 
 # Imports from the Python standard library
 import time
@@ -35,9 +34,13 @@ for tweet in tweepy.Cursor(api.user_timeline, screen_name='UNDRAPTOR').items(50)
 		if not tweet.favorited:
 			api.create_favorite(tweet.id)
 			print('Favorited tweet')
+		else:
+			print('Tweet already favorited')
 		if not tweet.retweeted:
 			api.retweet(tweet.id)
 			print('Retweeted tweet')
+		else:
+			print('Tweet already retweeted')
 		time.sleep(5)
 	except Exception as e:
 		print(e.reason)
@@ -50,9 +53,13 @@ for tweet in tweepy.Cursor(api.home_timeline).items(50):
 		if not tweet.favorited:
 			api.create_favorite(tweet.id)
 			print('Favorited tweet')
+		else:
+			print('Tweet already favorited')
 		if not tweet.retweeted:
 			api.retweet(tweet.id)
 			print('Retweeted tweet')
+		else:
+			print('Tweet already retweeted')
 		time.sleep(5)
 	except Exception as e:
 		print(e.reason)
