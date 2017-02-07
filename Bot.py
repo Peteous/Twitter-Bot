@@ -47,7 +47,7 @@ for tweet in tweepy.Cursor(api.search, q='python').items(50):
     except StopIteration:
         break
 
-for tweet in tweepy.Cursor(api.user_timeline).items(50):
+for tweet in tweepy.Cursor(api.home_timeline).items(50):
 	try:
 		print('\nTweet by: @' + tweet.user.screen_name)
 		if not tweet.favorited:
