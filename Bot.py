@@ -28,6 +28,21 @@ auth.set_access_token(access_token, access_token_secret)
 
 api = tweepy.API(auth)
 
+for tweet in tweepy.Cursor(api.home_timeline).items(50):
+	try:
+		print('\nTweet in timeline by: @' + tweet.user.screen_name)
+		if not tweet.favorited:
+			api.create_favorite(tweet.id)
+			print('Favorited tweet')
+		if not tweet.retweeted:
+			api.retweet(tweet.id)
+			print('Retweeted tweet')
+		time.sleep(5)
+	except Exception as e:
+		print(e.reason)
+	except StopIteration:
+		break
+
 for tweet in tweepy.Cursor(api.search, q='python').items(50):
     try:
         print('\nTweet by: @' + tweet.user.screen_name)
@@ -47,22 +62,7 @@ for tweet in tweepy.Cursor(api.search, q='python').items(50):
     except StopIteration:
         break
 
-for tweet in tweepy.Cursor(api.home_timeline).items(50):
-	try:
-		print('\nTweet in timeline by: @' + tweet.user.screen_name)
-		if not tweet.favorited:
-			api.create_favorite(tweet.id)
-			print('Favorited tweet')
-		if not tweet.retweeted:
-			api.retweet(tweet.id)
-			print('Retweeted tweet')
-		time.sleep(5)
-	except Exception as e:
-		print(e.reason)
-	except StopIteration:
-		break
-
-__tweetList = ["What is a git and how do I eat one? I'm a python.","Can a mouse be parsed? I'm a python.","I don't string parse, I slither. I'm a python.","Just adaded a commit to a repo. I'm a python."]
+__tweetList = ["Snake, snake, Severus Snake. I'm a python.","What is a git and how do I eat one? I'm a python.","Can a mouse be parsed? I'm a python.","I don't string parse, I slither. I'm a python.","Just adaded a commit to a repo. I'm a python."]
 __oopsList = ["Oops!","Oops","Gee Wiz!","Darn."]
 __errorOccured = ["Was error found.","I rattled my rattler.","Sssssthtthssss","I forgot parseltongue."]
 try:
