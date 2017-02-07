@@ -28,6 +28,21 @@ auth.set_access_token(access_token, access_token_secret)
 
 api = tweepy.API(auth)
 
+for tweet in tweepy.Cursor(api.user_timeline, screen_name='UNDRAPTOR').items(50):
+	try:
+		print('\nTweet direct from user: @' + tweet.user.screen_name)
+		if not tweet.favorited:
+			api.create_favorite(tweet.id)
+			print('Favorited tweet')
+		if not tweet.retweeted:
+			api.retweet(tweet.id)
+			print('Retweeted tweet')
+		time.sleep(5)
+	except Exception as e:
+		print(e.reason)
+	except StopIteration:
+		break
+
 for tweet in tweepy.Cursor(api.home_timeline).items(50):
 	try:
 		print('\nTweet in timeline by: @' + tweet.user.screen_name)
