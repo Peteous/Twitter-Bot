@@ -83,7 +83,7 @@ __oopsList = ["Oops!","Oops","Gee Wiz!","Darn.","Oh deer."]
 __errorOccured = ["Was error found.","I rattled my rattler.","Sssssthtthssss","I forgot parseltongue.","I can't bot."]
 try:
 	api.update_status(string)
-	print(string)
+	print('\n'+string)
 	__tweetList.remove(string)
 	__tweetList.append(string)
 	time.sleep(5)
