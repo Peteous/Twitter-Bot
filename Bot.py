@@ -9,17 +9,16 @@ except ImportError:
 	except ImportError:
 		print("An error occurred with importing Twitter\'s API")
 
+# Imports from the Python standard library
 import time
 from random import randint
 
-# The consumer keys can be found on your application's Details
-# page located at https://dev.twitter.com/apps (under "OAuth settings")
+'''
+The consumer keys can be found on your application's Details
+page located at https://dev.twitter.com/apps (under "OAuth settings")
+'''
 consumer_key=""
 consumer_secret=""
-
-# The access tokens can be found on your applications's Details
-# page located at https://dev.twitter.com/apps (located
-# under "Your access token")
 access_token=""
 access_token_secret=""
 
