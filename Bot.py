@@ -89,6 +89,7 @@ __tweetList = ["Snake, snake, Severus Snake. I'm a python.","What is a git and h
 __oopsList = ["Oops!","Oops","Gee Wiz!","Darn.","Oh deer."]
 __errorOccured = ["Was error found.","I rattled my rattler.","Sssssthtthssss","I forgot parseltongue.","I can't bot."]
 try:
+	string = __tweetList[randint(0,len(__tweetList))]
 	api.update_status(string)
 	print('\n'+string)
 	__tweetList.remove(string)
