@@ -3,7 +3,7 @@ try:
 	import tweepy
 except ImportError:
 	import os
-	os.system("python get-pip.py --user")
+	#if they have pip already on the machine, this should install tweepy
 	os.system("pip install --ignore-installed tweepy --user")
 	try:
 		import tweepy
@@ -11,6 +11,7 @@ except ImportError:
 	except ImportError as e:
 		print("An error occurred with importing Twitter\'s API")
 		print(e.reason)
+		#Code will not run without tweepy - please pip install tweepy
 
 # Imports from the Python standard library
 import time
