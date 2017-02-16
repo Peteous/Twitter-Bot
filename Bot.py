@@ -17,16 +17,18 @@ except ImportError:
 import time
 from random import randint
 
+# Imports class to read in authorization codes from an external file
 try:
 	from AuthCodes import *
 	codes = AuthCodes()
 except ImportError as e:
 	print(e.reason())
+
 '''
 The consumer keys can be found on your application's Details
 page located at https://dev.twitter.com/apps (under "OAuth settings")
 '''
-consumer_key=codes.consumerkey()
+consumer_key=codes.consumerkey() # authorization information is read in from an external file
 consumer_secret=codes.consumersecret()
 access_token=codes.accesstoken()
 access_token_secret=codes.accesssecret()
