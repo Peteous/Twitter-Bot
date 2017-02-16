@@ -17,14 +17,19 @@ except ImportError:
 import time
 from random import randint
 
+try:
+	from AuthCodes import *
+	codes = AuthCodes()
+except ImportError as e:
+	print(e.reason())
 '''
 The consumer keys can be found on your application's Details
 page located at https://dev.twitter.com/apps (under "OAuth settings")
 '''
-consumer_key=""
-consumer_secret=""
-access_token=""
-access_token_secret=""
+consumer_key=codes.consumerkey()
+consumer_secret=codes.consumersecret()
+access_token=codes.accesstoken()
+access_token_secret=codes.accesssecret()
 
 # Set up tweepy object for user account
 auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
