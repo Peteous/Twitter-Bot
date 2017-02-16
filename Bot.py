@@ -21,17 +21,20 @@ from random import randint
 try:
 	from AuthCodes import *
 	codes = AuthCodes()
+	'''
+	The consumer keys can be found on your application's Details
+	page located at https://dev.twitter.com/apps (under "OAuth settings")
+	'''
+	consumer_key=codes.consumerkey() # authorization information is read in from an external file
+	consumer_secret=codes.consumersecret()
+	access_token=codes.accesstoken()
+	access_token_secret=codes.accesssecret()
 except ImportError as e:
 	print(e.reason())
-
-'''
-The consumer keys can be found on your application's Details
-page located at https://dev.twitter.com/apps (under "OAuth settings")
-'''
-consumer_key=codes.consumerkey() # authorization information is read in from an external file
-consumer_secret=codes.consumersecret()
-access_token=codes.accesstoken()
-access_token_secret=codes.accesssecret()
+	consumer_key = input('What is your consumer key?')
+	consumer_secret = input('What is your consumer secret?')
+	access_token = input('What is your access token?')
+	access_token_secret = input('What is your access token secret?')
 
 # Set up tweepy object for user account
 auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
