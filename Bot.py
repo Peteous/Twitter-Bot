@@ -102,7 +102,7 @@ for tweet in tweepy.Cursor(api.search, q='python').items(50):
         break
 
 # Set up list of original tweets
-__tweetList = ["Snake, snake, Severus Snake. I'm a python.","What is a git and how do I eat one? I'm a python.","Can a mouse be parsed? I'm a python.","I don't string parse, I slither. I'm a python.","Just adaded a commit to a repo. I'm a python."]
+__tweetList = ["Snake, snake, Severus Snake. I'm a python.","What is a git and how do I eat one? I'm a python.","Can a mouse be parsed? I'm a python.","I don't string parse, I slither. I'm a python.","Just adaded a commit to a repo. I'm a python.","If machines can learn, then snakes can learn. I'm a python.","They've taught machines to learn to code. I'm a snake who learned to code. You can learn to code. I'm a python."]
 
 # Set up list of exclamations and descriptors for random combination and tweeting
 __oopsList = ["Oops!","Oops","Gee Wiz!","Darn.","Oh deer."]
