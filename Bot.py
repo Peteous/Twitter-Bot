@@ -130,3 +130,13 @@ except tweepy.error.TweepError:
 		__status += ". I'm a python."
 		api.update_status(__status)
 		print('Just tweeted: ' + __status)
+
+user = api.me()
+_URL = 'https://www.twitter.com/'+user.screen_name
+try:
+	import webbrowser
+	webbrowser.open(_URL)
+	print('\nCheck out your handywork!')
+except ImportError as e:
+	print(e.reason)
+	print("Web Browser Library wasn't found.\nPaste this url into your browser to see your handy work:\n" + _URL)
