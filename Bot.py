@@ -1,3 +1,7 @@
+# Imports from the Python standard library
+import time
+from random import randint
+
 # Try to import tweepy (twitter API wrapper), and pip install tweept if import fails
 try:
 	import tweepy
@@ -5,6 +9,7 @@ except ImportError:
 	import os
 	#if they have pip already on the machine, this should install tweepy
 	os.system("pip install --ignore-installed tweepy --user")
+	time.sleep(50) #Wait a bit for tweepy to pip install before trying to import tweepy
 	try:
 		import tweepy
 	# If second import fails, write the failure to the console
@@ -12,10 +17,6 @@ except ImportError:
 		print("An error occurred with importing Twitter\'s API")
 		print(e.reason)
 		#Code will not run without tweepy - please pip install tweepy
-
-# Imports from the Python standard library
-import time
-from random import randint
 
 # Imports class to read in authorization codes from an external file
 try:
