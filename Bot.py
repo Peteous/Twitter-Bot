@@ -78,70 +78,79 @@ for tweet in tweepy.Cursor(api.user_timeline, screen_name='UNDRAPTOR').items(50)
 # Find 50 most recent tweets in your main timeline and like & retweet them
 for tweet in tweepy.Cursor(api.home_timeline).items(50):
 	try:
-		print('\nTweet in timeline by: @' + tweet.user.screen_name)
-		if not tweet.favorited:
-			api.create_favorite(tweet.id)
-			print('Favorited tweet')
+		if not tweet.user.screen_name == user.screen_name:
+			print('\nTweet in timeline by: @' + tweet.user.screen_name)
+			if not tweet.favorited:
+				api.create_favorite(tweet.id)
+				print('Favorited tweet')
+			else:
+				print('Tweet already favorited')
+			if not tweet.retweeted:
+				api.retweet(tweet.id)
+				print('Retweeted tweet')
+			else:
+				print('Tweet already retweeted')
+			time.sleep(5)
 		else:
-			print('Tweet already favorited')
-		if not tweet.retweeted:
-			api.retweet(tweet.id)
-			print('Retweeted tweet')
-		else:
-			print('Tweet already retweeted')
-		time.sleep(5)
+			print('This is your own tweet')
 	except Exception as e:
 		print(e.reason)
+	except StopIteration:
 		webbrowser.open(_URL)
 		print('\nCheck out your handywork!')
-	except StopIteration:
 		break
 
 # Find 50 most recemt tweets containing "python" and like & retweet them
 for tweet in tweepy.Cursor(api.search, q='python').items(50):
     try:
-        print('\nTweet by: @' + tweet.user.screen_name)
-        if not tweet.retweeted:
-        	tweet.retweet()
-        	print('Retweeted the tweet')
-        else:
-        	print('Tweet already retweeted')
-        if not tweet.favorited:
-        	tweet.favorite()
-        	print('Favorited the tweet')
-        else:
-        	print('Tweet already favorited')
-        time.sleep(5)
-        __reply = "@" + tweet.user.screen_name + " I'm a python."
-        api.update_status(__reply,tweet.id)
-        print('replied to the tweet')
+    	if not tweet.user.screen_name == user.screen_name:
+	        print('\nTweet by: @' + tweet.user.screen_name)
+	        if not tweet.retweeted:
+	        	tweet.retweet()
+	        	print('Retweeted the tweet')
+	        else:
+	        	print('Tweet already retweeted')
+	        if not tweet.favorited:
+	        	tweet.favorite()
+	        	print('Favorited the tweet')
+	        else:
+	        	print('Tweet already favorited')
+	        time.sleep(5)
+	        __reply = "@" + tweet.user.screen_name + " I'm a python."
+	        api.update_status(__reply,tweet.id)
+	        print('replied to the tweet')
+	    else:
+	    	print('You found your tweet. Consider it ignored.')
+	    time.sleep(5)
     except tweepy.TweepError as e:
         print(e.reason)
+    except StopIteration:
         webbrowser.open(_URL)
 		print('\nCheck out your handywork!')
-    except StopIteration:
         break
 
 for tweet in tweepy.Cursor(api.search, q='#NASARMC').items(30):
 	try:
-		print('\nTweet with hashtag by: @' + tweet.user.screen_name)
-		if not tweet.retweeted:
-			tweet.retweet()
-			print('Retweeted the tweet')
-		else:
-			print('Tweet already retweeted')
-		if not tweet.favorited:
-			tweet.favorite()
-			print('Favorited the tweet')
-		else:
-			print('Tweet already favorited')
-		# Establish reply tweet text
-		__reply = "@" + tweet.user.screen_name + " I see you're tweeting about NASA's RMC. Are you following @UNDRAPTOR yet?\nI'm a python."
+		if not tweet.user.screen_name == user.screen_name:
+			print('\nTweet with hashtag by: @' + tweet.user.screen_name)
+			if not tweet.retweeted:
+				tweet.retweet()
+				print('Retweeted the tweet')
+			else:
+				print('Tweet already retweeted')
+			if not tweet.favorited:
+				tweet.favorite()
+				print('Favorited the tweet')
+			else:
+				print('Tweet already favorited')
+			# Establish reply tweet text
+			__reply = "@" + tweet.user.screen_name + " I see you're tweeting about NASA's RMC. Are you following @UNDRAPTOR yet?\nI'm a python."
 
-		# Reply to the tweet in question
-		tweet.update_status(__reply,tweet.id)
-		print('Replied to the account')
-
+			# Reply to the tweet in question
+			tweet.update_status(__reply,tweet.id)
+			print('Replied to the account')
+		else:
+			print('You found your own tweet. It was ignored.')
 		time.sleep(5)
 	except tweepy.TweepError as e:
 		print(e.reason)
