@@ -42,6 +42,17 @@ auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_token_secret)
 api = tweepy.API(auth)
 
+# Establish URL for opening webpage upon code completion
+user = api.me()
+_URL = 'https://www.twitter.com/'+user.screen_name
+
+# Import webbrowser library for opening url in default browser
+try:
+	import webbrowser
+except ImportError as e:
+	print(e.reason)
+	print("Web Browser Library wasn't found.\nPaste this url into your browser to see your handy work:\n" + _URL)
+
 # Find 50 most recent tweets from @UNDRAPTOR account and like & retweet them
 for tweet in tweepy.Cursor(api.user_timeline, screen_name='UNDRAPTOR').items(50):
 	try:
@@ -59,6 +70,8 @@ for tweet in tweepy.Cursor(api.user_timeline, screen_name='UNDRAPTOR').items(50)
 		time.sleep(5)
 	except Exception as e:
 		print(e.reason)
+		webbrowser.open(_URL)
+		print('\nCheck out your handywork!')
 	except StopIteration:
 		break
 
@@ -79,6 +92,8 @@ for tweet in tweepy.Cursor(api.home_timeline).items(50):
 		time.sleep(5)
 	except Exception as e:
 		print(e.reason)
+		webbrowser.open(_URL)
+		print('\nCheck out your handywork!')
 	except StopIteration:
 		break
 
@@ -102,6 +117,8 @@ for tweet in tweepy.Cursor(api.search, q='python').items(50):
         print('replied to the tweet')
     except tweepy.TweepError as e:
         print(e.reason)
+        webbrowser.open(_URL)
+		print('\nCheck out your handywork!')
     except StopIteration:
         break
 
@@ -128,6 +145,8 @@ for tweet in tweepy.Cursor(api.search, q='#NASARMC').items(30):
 		time.sleep(5)
 	except tweepy.TweepError as e:
 		print(e.reason)
+		webbrowser.open(_URL)
+		print('\nCheck out your handywork!')
 	except StopIteration:
 		break
 
@@ -160,13 +179,10 @@ except tweepy.error.TweepError:
 		__status += ". I'm a python."
 		api.update_status(__status)
 		print('Just tweeted: ' + __status)
-
-user = api.me()
-_URL = 'https://www.twitter.com/'+user.screen_name
-try:
-	import webbrowser
+except StopIteration:
 	webbrowser.open(_URL)
 	print('\nCheck out your handywork!')
-except ImportError as e:
-	print(e.reason)
-	print("Web Browser Library wasn't found.\nPaste this url into your browser to see your handy work:\n" + _URL)
+	break
+
+webbrowser.open(_URL)
+print('\nCheck out your handywork!')
