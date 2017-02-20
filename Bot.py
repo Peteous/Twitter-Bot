@@ -112,11 +112,12 @@ __errorOccured = ["Was error found.","I rattled my rattler.","Sssssthtthssss","I
 try:
 	string = __tweetList[randint(0,len(__tweetList))]
 	api.update_status(string)
-	print('\n'+string)
+	print('\n'+'Just tweeted: '+string)
 	__tweetList.remove(string)
 	__tweetList.append(string)
 	time.sleep(5)
 except tweepy.error.TweepError:
+	print('\nJust tried fo tweet: ' + string)
 	print('That tweet has already been tweeted')
 	try:
 		__status = __oopsList[randint(0,len(__errorOccured))] + " " + __errorOccured[randint(0,len(__errorOccured))] + " I'm a python."
@@ -128,4 +129,4 @@ except tweepy.error.TweepError:
 			__status += "Bother "
 		__status += ". I'm a python."
 		api.update_status(__status)
-		print(__status)
+		print('Just tweeted: ' + __status)
