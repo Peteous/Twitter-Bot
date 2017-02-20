@@ -119,6 +119,7 @@ for tweet in tweepy.Cursor(api.search, q='#NASARMC').items(25):
 
 		# Reply to the tweet in question
 		api.update_status("I see you're tweeting about NASA's RMC. Are you following @UNDRAPTOR yet?\nI'm a python.", tweet.id)
+		print('Replied to the account')
 	
 	except tweepy.TweepError as e:
 		print(e.reason)
