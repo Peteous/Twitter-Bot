@@ -100,35 +100,37 @@ for tweet in tweepy.Cursor(api.home_timeline).items(50):
 		print('\nCheck out your handywork!')
 		break
 
+__python_Reply_List = ['Follow me.','If you like coding,','Consider following me for Python news','I am a bot written in python. Follow?','This reply was auto-generated using python.']
 # Find 50 most recemt tweets containing "python" and like & retweet them
 for tweet in tweepy.Cursor(api.search, q='python').items(50):
-    try:
-    	if not tweet.user.screen_name == user.screen_name:
-	        print('\nTweet by: @' + tweet.user.screen_name)
-	        if not tweet.retweeted:
-	        	tweet.retweet()
-	        	print('Retweeted the tweet')
-	        else:
-	        	print('Tweet already retweeted')
-	        if not tweet.favorited:
-	        	tweet.favorite()
-	        	print('Favorited the tweet')
-	        else:
-	        	print('Tweet already favorited')
-	        time.sleep(5)
-	        __reply = "@" + tweet.user.screen_name + " I'm a python."
-	        api.update_status(__reply,tweet.id)
-	        print('replied to the tweet')
-	    else:
-	    	print('You found your tweet. Consider it ignored.')
-	    time.sleep(5)
-    except tweepy.TweepError as e:
-        print(e.reason)
-    except StopIteration:
-        webbrowser.open(_URL)
+	try:
+		if not tweet.user.screen_name == user.screen_name:
+			print('\nTweet by: @' + tweet.user.screen_name)
+			if not tweet.retweeted:
+				tweet.retweet()
+				print('Retweeted the tweet')
+			else:
+				print('Tweet already retweeted')
+			if not tweet.favorited:
+				tweet.favorite()
+				print('Favorited the tweet')
+			else:
+				print('Tweet already favorited')
+			__reply = "@" + tweet.user.screen_name + " " + __python_Reply_List[randint(1,len(__replyList))]+ " I'm a python."
+			api.update_status(__reply,tweet.id)
+			print('replied to the tweet')
+			time.sleep(5)
+		else:
+			print('You found your tweet. Consider it ignored.')
+			time.sleep(5)
+	except tweepy.TweepError as e:
+		print(e.reason)
+	except StopIteration:
+		webbrowser.open(_URL)
 		print('\nCheck out your handywork!')
-        break
+		break
 
+__hashtag_reply_list = [" If you're interested in NASA's RMC, you should follow @UNDRAPTOR"," I see you're tweeting about NASA's RMC. Are you following @UNDRAPTOR yet?"," Consider following @UNDRAPTOR to stay up to date with their NASA RMC news."]
 for tweet in tweepy.Cursor(api.search, q='#NASARMC').items(30):
 	try:
 		if not tweet.user.screen_name == user.screen_name:
@@ -144,7 +146,7 @@ for tweet in tweepy.Cursor(api.search, q='#NASARMC').items(30):
 			else:
 				print('Tweet already favorited')
 			# Establish reply tweet text
-			__reply = "@" + tweet.user.screen_name + " I see you're tweeting about NASA's RMC. Are you following @UNDRAPTOR yet?\nI'm a python."
+			__reply = "@" + tweet.user.screen_name + __hashtag_reply_list[randint(1,len(__hashtag_reply_list))] + "\nI'm a python."
 
 			# Reply to the tweet in question
 			tweet.update_status(__reply,tweet.id)
@@ -188,10 +190,8 @@ except tweepy.error.TweepError:
 		__status += ". I'm a python."
 		api.update_status(__status)
 		print('Just tweeted: ' + __status)
-except StopIteration:
-	webbrowser.open(_URL)
-	print('\nCheck out your handywork!')
-	break
+		webbrowser.open(_URL)
+		print('\nCheck out your handywork!')
 
 webbrowser.open(_URL)
 print('\nCheck out your handywork!')
