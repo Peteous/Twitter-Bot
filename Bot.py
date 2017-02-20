@@ -113,6 +113,8 @@ for tweet in tweepy.Cursor(api.search, q='#NASARMC').items(25):
 		print('Favorited the tweet')
 
 		time.sleep(5)
+
+		api.update_status("I see you're tweeting about NASA's RMC. Are you following @UNDRAPTOR yet?\nI'm a python.", tweet.id)
 	
 	except tweepy.TweepError as e:
 		print(e.reason)
