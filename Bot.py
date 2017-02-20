@@ -97,14 +97,17 @@ for tweet in tweepy.Cursor(api.search, q='python').items(50):
         else:
         	print('Tweet already favorited')
         time.sleep(5)
+        __reply = "@" + tweet.user.screen_name + " I'm a python."
+        api.update_status(__reply,tweet.id)
+        print('replied to the tweet')
     except tweepy.TweepError as e:
         print(e.reason)
     except StopIteration:
         break
 
-for tweet in tweepy.Cursor(api.search, q='#NASARMC').items(25):
+for tweet in tweepy.Cursor(api.search, q='#NASARMC').items(30):
 	try:
-		print('\nTweet by: @' + tweet.user.screen_name)
+		print('\nTweet with hashtag by: @' + tweet.user.screen_name)
 		if not tweet.retweeted:
 			tweet.retweet()
 			print('Retweeted the tweet')
@@ -115,12 +118,14 @@ for tweet in tweepy.Cursor(api.search, q='#NASARMC').items(25):
 			print('Favorited the tweet')
 		else:
 			print('Tweet already favorited')
-		time.sleep(5)
+		# Establish reply tweet text
+		__reply = "@" + tweet.user.screen_name + " I see you're tweeting about NASA's RMC. Are you following @UNDRAPTOR yet?\nI'm a python."
 
 		# Reply to the tweet in question
-		api.update_status("I see you're tweeting about NASA's RMC. Are you following @UNDRAPTOR yet?\nI'm a python.", tweet.id)
+		tweet.update_status(__reply,tweet.id)
 		print('Replied to the account')
-	
+
+		time.sleep(5)
 	except tweepy.TweepError as e:
 		print(e.reason)
 	except StopIteration:
