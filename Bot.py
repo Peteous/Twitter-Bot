@@ -92,6 +92,7 @@ for tweet in tweepy.Cursor(api.home_timeline).items(50):
 				print('Tweet already retweeted')
 			time.sleep(5)
 		else:
+			print('\nTweet in timeline by: @' + tweet.user.screen_name)
 			print('This is your own tweet')
 	except Exception as e:
 		print(e.reason)
@@ -116,7 +117,7 @@ for tweet in tweepy.Cursor(api.search, q='python').items(50):
 				print('Favorited the tweet')
 			else:
 				print('Tweet already favorited')
-			__reply = "@" + tweet.user.screen_name + " " + __python_Reply_List[randint(1,len(__replyList))]+ " I'm a python."
+			__reply = "@" + tweet.user.screen_name + " " + __python_Reply_List[randint(0,len(__replyList)-1)]+ " I'm a python."
 			api.update_status(__reply,tweet.id)
 			print('replied to the tweet')
 			time.sleep(5)
@@ -146,7 +147,7 @@ for tweet in tweepy.Cursor(api.search, q='#NASARMC').items(30):
 			else:
 				print('Tweet already favorited')
 			# Establish reply tweet text
-			__reply = "@" + tweet.user.screen_name + __hashtag_reply_list[randint(1,len(__hashtag_reply_list))] + "\nI'm a python."
+			__reply = "@" + tweet.user.screen_name + __hashtag_reply_list[randint(0,len(__hashtag_reply_list)-1)] + " I'm a python."
 
 			# Reply to the tweet in question
 			tweet.update_status(__reply,tweet.id)
@@ -156,9 +157,9 @@ for tweet in tweepy.Cursor(api.search, q='#NASARMC').items(30):
 		time.sleep(5)
 	except tweepy.TweepError as e:
 		print(e.reason)
+	except StopIteration:
 		webbrowser.open(_URL)
 		print('\nCheck out your handywork!')
-	except StopIteration:
 		break
 
 # Set up list of original tweets
@@ -170,7 +171,7 @@ __errorOccured = ["Was error found.","I rattled my rattler.","Sssssthtthssss","I
 
 # try to tweet from __tweetList, of that fails, random combine words from __oopsList and __errorOccured list for tweeting
 try:
-	string = __tweetList[randint(0,len(__tweetList))]
+	string = __tweetList[randint(0,len(__tweetList)-1)]
 	api.update_status(string)
 	print('\n'+'Just tweeted: '+string)
 	__tweetList.remove(string)
