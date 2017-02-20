@@ -86,39 +86,42 @@ for tweet in tweepy.Cursor(api.home_timeline).items(50):
 for tweet in tweepy.Cursor(api.search, q='python').items(50):
     try:
         print('\nTweet by: @' + tweet.user.screen_name)
-
-        tweet.retweet()
-        print('Retweeted the tweet')
-
-        # Favorite the tweet
-        tweet.favorite()
-        print('Favorited the tweet')
-
+        if not tweet.retweeted:
+        	tweet.retweet()
+        	print('Retweeted the tweet')
+        else:
+        	print('Tweet already retweeted')
+        if not tweet.favorited:
+        	tweet.favorite()
+        	print('Favorited the tweet')
+        else:
+        	print('Tweet already favorited')
         time.sleep(5)
-
     except tweepy.TweepError as e:
         print(e.reason)
-
     except StopIteration:
         break
 
 for tweet in tweepy.Cursor(api.search, q='#NASARMC').items(25):
 	try:
 		print('\nTweet by: @' + tweet.user.screen_name)
-
-		tweet.retweet()
-		print('Retweeted the tweet')
-
-		tweet.favorite()
-		print('Favorited the tweet')
-
+		if not tweet.retweeted:
+			tweet.retweet()
+			print('Retweeted the tweet')
+		else:
+			print('Tweet already retweeted')
+		if not tweet.favorited:
+			tweet.favorite()
+			print('Favorited the tweet')
+		else:
+			print('Tweet already favorited')
 		time.sleep(5)
 
+		# Reply to the tweet in question
 		api.update_status("I see you're tweeting about NASA's RMC. Are you following @UNDRAPTOR yet?\nI'm a python.", tweet.id)
 	
 	except tweepy.TweepError as e:
 		print(e.reason)
-
 	except StopIteration:
 		break
 
