@@ -134,7 +134,14 @@ for tweet in tweepy.Cursor(api.search, q='python').items(50):
 		webbrowser.open(_URL)
 		break
 
+# Reset counters
+rt_counter = 0
+fav_counter = 0
+
 for tweet in tweepy.Cursor(api.search, q='#NASARMC').items(30):
+	if fav_counter >= 3 and rt_counter >= 3:
+		print("You're all caught up on that hashtag")
+		break
 	try:
 		if not tweet.user.screen_name == user.screen_name:
 			print('\nTweet with hashtag by: @' + tweet.user.screen_name)
@@ -142,11 +149,13 @@ for tweet in tweepy.Cursor(api.search, q='#NASARMC').items(30):
 				tweet.retweet()
 				print('Retweeted the tweet')
 			else:
+				rt_counter += 1
 				print('Tweet already retweeted')
 			if not tweet.favorited:
 				tweet.favorite()
 				print('Favorited the tweet')
 			else:
+				fav_counter += 1
 				print('Tweet already favorited')
 		else:
 			print('You found your own tweet. It was ignored.')
