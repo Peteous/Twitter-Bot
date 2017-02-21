@@ -70,8 +70,8 @@ for tweet in tweepy.Cursor(api.user_timeline, screen_name='UNDRAPTOR').items(50)
 		time.sleep(5)
 	except Exception as e:
 		print(e.reason)
-		webbrowser.open(_URL)
 		print('\nCheck out your handywork!')
+		webbrowser.open(_URL)
 	except StopIteration:
 		break
 
@@ -97,8 +97,8 @@ for tweet in tweepy.Cursor(api.home_timeline).items(50):
 	except Exception as e:
 		print(e.reason)
 	except StopIteration:
-		webbrowser.open(_URL)
 		print('\nCheck out your handywork!')
+		webbrowser.open(_URL)
 		break
 
 __python_Reply_List = ['Follow me.','If you like coding,','Consider following me for Python news','I am a bot written in python. Follow?','This reply was auto-generated using python.']
@@ -127,8 +127,8 @@ for tweet in tweepy.Cursor(api.search, q='python').items(50):
 	except tweepy.TweepError as e:
 		print(e.reason)
 	except StopIteration:
-		webbrowser.open(_URL)
 		print('\nCheck out your handywork!')
+		webbrowser.open(_URL)
 		break
 
 __hashtag_reply_list = [" If you're interested in NASA's RMC, you should follow @UNDRAPTOR"," I see you're tweeting about NASA's RMC. Are you following @UNDRAPTOR yet?"," Consider following @UNDRAPTOR to stay up to date with their NASA RMC news."]
@@ -158,8 +158,8 @@ for tweet in tweepy.Cursor(api.search, q='#NASARMC').items(30):
 	except tweepy.TweepError as e:
 		print(e.reason)
 	except StopIteration:
-		webbrowser.open(_URL)
 		print('\nCheck out your handywork!')
+		webbrowser.open(_URL)
 		break
 
 # Set up list of original tweets
@@ -191,8 +191,8 @@ except tweepy.error.TweepError:
 		__status += ". I'm a python."
 		api.update_status(__status)
 		print('Just tweeted: ' + __status)
-		webbrowser.open(_URL)
 		print('\nCheck out your handywork!')
+		webbrowser.open(_URL)
 
-webbrowser.open(_URL)
 print('\nCheck out your handywork!')
+webbrowser.open(_URL)
