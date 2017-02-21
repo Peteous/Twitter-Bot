@@ -101,7 +101,6 @@ for tweet in tweepy.Cursor(api.home_timeline).items(50):
 		webbrowser.open(_URL)
 		break
 
-__python_Reply_List = ['Follow me.','If you like coding,','Consider following me for Python news','I am a bot written in python. Follow?','This reply was auto-generated using python.']
 # Find 50 most recemt tweets containing "python" and like & retweet them
 for tweet in tweepy.Cursor(api.search, q='python').items(50):
 	try:
@@ -117,9 +116,6 @@ for tweet in tweepy.Cursor(api.search, q='python').items(50):
 				print('Favorited the tweet')
 			else:
 				print('Tweet already favorited')
-			__reply = "@" + tweet.user.screen_name + " " + __python_Reply_List[randint(0,len(__replyList)-1)]+ " I'm a python."
-			api.update_status(__reply,tweet.id)
-			print('replied to the tweet')
 			time.sleep(5)
 		else:
 			print('You found your tweet. Consider it ignored.')
@@ -131,7 +127,6 @@ for tweet in tweepy.Cursor(api.search, q='python').items(50):
 		webbrowser.open(_URL)
 		break
 
-__hashtag_reply_list = [" If you're interested in NASA's RMC, you should follow @UNDRAPTOR"," I see you're tweeting about NASA's RMC. Are you following @UNDRAPTOR yet?"," Consider following @UNDRAPTOR to stay up to date with their NASA RMC news."]
 for tweet in tweepy.Cursor(api.search, q='#NASARMC').items(30):
 	try:
 		if not tweet.user.screen_name == user.screen_name:
@@ -146,12 +141,6 @@ for tweet in tweepy.Cursor(api.search, q='#NASARMC').items(30):
 				print('Favorited the tweet')
 			else:
 				print('Tweet already favorited')
-			# Establish reply tweet text
-			__reply = "@" + tweet.user.screen_name + __hashtag_reply_list[randint(0,len(__hashtag_reply_list)-1)] + " I'm a python."
-
-			# Reply to the tweet in question
-			tweet.update_status(__reply,tweet.id)
-			print('Replied to the account')
 		else:
 			print('You found your own tweet. It was ignored.')
 		time.sleep(5)
