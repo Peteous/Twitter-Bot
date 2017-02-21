@@ -158,7 +158,7 @@ __tweetList = ["Snake, snake, Severus Snake. I'm a python.","What is a git and h
 __oopsList = ["Oops!","Oops","Gee Wiz!","Darn.","Oh deer."]
 __errorOccured = ["Was error found.","I rattled my rattler.","Sssssthtthssss","I forgot parseltongue.","I can't bot."]
 
-# try to tweet from __tweetList, of that fails, random combine words from __oopsList and __errorOccured list for tweeting
+# try to tweet from __tweetList, if that fails, random combine words from __oopsList and __errorOccured list for tweeting
 try:
 	string = __tweetList[randint(0,len(__tweetList)-1)]
 	api.update_status(string)
