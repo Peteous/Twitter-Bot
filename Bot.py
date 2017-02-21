@@ -180,8 +180,6 @@ except tweepy.error.TweepError:
 		__status += ". I'm a python."
 		api.update_status(__status)
 		print('Just tweeted: ' + __status)
-		print('\nCheck out your handywork!')
-		webbrowser.open(_URL)
 
 print('\nCheck out your handywork!')
 webbrowser.open(_URL)
