@@ -53,19 +53,26 @@ except ImportError as e:
 	print(e.reason)
 	print("Web Browser Library wasn't found.\nPaste this url into your browser to see your handy work:\n" + _URL)
 
+fav_counter = 0
+rt_counter = 0
 # Find 50 most recent tweets from @UNDRAPTOR account and like & retweet them
 for tweet in tweepy.Cursor(api.user_timeline, screen_name='UNDRAPTOR').items(50):
+	if fav_counter >= 3 and rt_counter >= 3:
+		print("You're all caught up on this user's timeline")
+		break
 	try:
 		print('\nTweet direct from user: @' + tweet.user.screen_name)
 		if not tweet.favorited:
 			api.create_favorite(tweet.id)
 			print('Favorited tweet')
 		else:
+			fav_counter+=1
 			print('Tweet already favorited')
 		if not tweet.retweeted:
 			api.retweet(tweet.id)
 			print('Retweeted tweet')
 		else:
+			rt_counter+=1
 			print('Tweet already retweeted')
 		time.sleep(5)
 	except Exception as e:
