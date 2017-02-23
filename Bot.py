@@ -134,6 +134,39 @@ for tweet in tweepy.Cursor(api.search, q='python').items(50):
 		webbrowser.open(_URL)
 		break
 
+# Reset Counters
+rt_counter = 0
+fav_counter = 0
+
+# Find 100 most recemt tweets containing "#IEngineerBecause" and like & retweet them
+for tweet in tweepy.Cursor(api.search, q='#IEngineerBecause').items(100):
+	if fav_counter >= 3 and rt_counter >= 3:
+		print("You're all caught up on that hashtag")
+		break
+	try:
+		if not tweet.user.screen_name == user.screen_name:
+			print('\nTweet by: @' + tweet.user.screen_name)
+			if not tweet.retweeted:
+				tweet.retweet()
+				print('Retweeted the tweet')
+			else:
+				print('Tweet already retweeted')
+			if not tweet.favorited:
+				tweet.favorite()
+				print('Favorited the tweet')
+			else:
+				print('Tweet already favorited')
+			time.sleep(5)
+		else:
+			print('You found your tweet. Consider it ignored.')
+			time.sleep(5)
+	except tweepy.TweepError as e:
+		print(e.reason)
+	except StopIteration:
+		print('\nCheck out your handywork!')
+		webbrowser.open(_URL)
+		break
+
 # Reset counters
 rt_counter = 0
 fav_counter = 0
