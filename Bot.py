@@ -82,7 +82,7 @@ for tweet in tweepy.Cursor(api.user_timeline, screen_name='UNDRAPTOR').items(50)
 	except StopIteration:
 		break
 
-# Find 50 most recent tweets in your main timeline and like & retweet them
+# Find 100 most recent tweets in your main timeline and like & retweet them
 for tweet in tweepy.Cursor(api.home_timeline).items(100):
 	try:
 		if not tweet.user.screen_name == user.screen_name:
