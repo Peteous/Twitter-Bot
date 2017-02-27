@@ -19,10 +19,13 @@ class ReadData:
 
 	def getAction(self,text):
 		action = ''
+		end = False
 		for index in range(len(text)):
-			if not text[index] == '=':
+			if not text[index] == '=' and not end == True:
 				action += text[index]
-		return action.rstrip()
+			if text[index] == '=' and not end == True:
+				end = True
+		return action
 
 	def getActionList(self):
 		actionList = []
