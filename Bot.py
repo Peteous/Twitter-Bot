@@ -108,7 +108,7 @@ for tweet in tweepy.Cursor(api.home_timeline).items(100):
 		webbrowser.open(_URL)
 		break
 
-# Find 50 most recemt tweets containing "python" and like & retweet them
+# Find 50 most recent tweets containing "python" and like & retweet them
 for tweet in tweepy.Cursor(api.search, q='python').items(50):
 	try:
 		if not tweet.user.screen_name == user.screen_name:
@@ -218,17 +218,6 @@ try:
 except tweepy.error.TweepError:
 	print('\nJust tried fo tweet: ' + string)
 	print('That tweet has already been tweeted')
-	try:
-		__status = __oopsList[randint(0,len(__errorOccured))] + " " + __errorOccured[randint(0,len(__errorOccured))] + " I'm a python."
-		api.update_status(__status)
-	except tweepy.error.TweepError:
-		print('Something is boggled')
-		__status = ""
-		for index in range(0,randint(1,5)):
-			__status += "Bother "
-		__status += ". I'm a python."
-		api.update_status(__status)
-		print('Just tweeted: ' + __status)
 
 print('\nCheck out your handywork!')
 webbrowser.open(_URL)
