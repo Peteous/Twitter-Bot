@@ -48,7 +48,7 @@ try:
 	data = ReadData()
 	actionList = data.getActionList()
 	criteriaList = data.getCriteriaList()
-except:
+except ImportError:
 	actionList = []
 	actionList.append('tweet=')
 	criteriaList = []
@@ -68,18 +68,18 @@ except ImportError as e:
 # Set up list of original tweets
 __tweetList = []
 
-for index in range(len(actionList)):
+for index in range(len(actionList)-1):
 	if actionList[index] == 'user-timeline':
 		fav_counter = 0
 		rt_counter = 0
 
-		# Find 50 most recent tweets from @UNDRAPTOR account and like & retweet them
+		# Find 50 most recent tweets from user account and like & retweet them
 		for tweet in tweepy.Cursor(api.user_timeline, screen_name=criteriaList[index]).items(50):
 			if fav_counter >= 3 and rt_counter >= 3:
 				print("You're all caught up on this user's timeline")
 				break
 			try:
-				print('\nTweet direct from user: @' + tweet.user.screen_name)
+				print('\nTweet from @' + tweet.user.screen_name)
 				if not tweet.favorited:
 					api.create_favorite(tweet.id)
 					print('Favorited tweet')
@@ -104,9 +104,8 @@ for index in range(len(actionList)):
 		rt_counter = 0
 		fav_counter = 0
 
-		query = '#' + criteriaList[index]
-		# Find 50 most recemt tweets containing "#IEngineerBecause" and like & retweet them
-		for tweet in tweepy.Cursor(api.search, q=query).items(50):
+		# Find 50 most recemt tweets containing hashtag and like & retweet them
+		for tweet in tweepy.Cursor(api.search, q=criteriaList[index]).items(50):
 			if fav_counter >= 3 and rt_counter >= 3:
 				print("You're all caught up on that hashtag")
 				break
@@ -125,7 +124,7 @@ for index in range(len(actionList)):
 						print('Tweet already favorited')
 					time.sleep(5)
 				else:
-					print('You found your tweet. Consider it ignored.')
+					print('\nYou found your tweet. Consider it ignored.')
 					time.sleep(5)
 			except tweepy.TweepError as e:
 				print(e.reason)
@@ -135,8 +134,8 @@ for index in range(len(actionList)):
 				break
 
 	elif actionList[index] == 'search':
-		# Find 50 most recent tweets containing "python" and like & retweet them
-		for tweet in tweepy.Cursor(api.search, q='python').items(50):
+		# Find 50 most recent tweets containing search term and like & retweet them
+		for tweet in tweepy.Cursor(api.search, q=criteriaList[index]).items(50):
 			try:
 				if not tweet.user.screen_name == user.screen_name:
 					print('\nTweet by: @' + tweet.user.screen_name)
@@ -152,7 +151,7 @@ for index in range(len(actionList)):
 						print('Tweet already favorited')
 					time.sleep(5)
 				else:
-					print('You found your tweet. Consider it ignored.')
+					print('\nYou found your tweet. Consider it ignored.')
 					time.sleep(5)
 			except tweepy.TweepError as e:
 				print(e.reason)
@@ -163,7 +162,7 @@ for index in range(len(actionList)):
 
 	elif actionList[index] == 'tweet':
 		__tweetList.append(criteriaList[index])
-
+		time.sleep(5)
 
 # Find 100 most recent tweets in your main timeline and like & retweet them
 for tweet in tweepy.Cursor(api.home_timeline).items(100):

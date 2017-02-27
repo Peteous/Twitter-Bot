@@ -7,12 +7,11 @@ structured in format action="criteria"\n
 class ReadData:
 	# upon object creation, twitter-data.txt is read into object
 	def __init__(self):
-		dataList = []
+		#dataList = []
 		try:
-			with open('twitter-data.txt','r') as datafile:
-				for line in datafile:
-					dataList.append(line)
-			authfile.close
+			with open('data.txt','r') as datafile:
+				self.dataList = datafile.readlines()
+			datafile.close
 		# If import fails, establish data from user input
 		except:
 			print('An error occured opening the required data file')
@@ -48,4 +47,5 @@ class ReadData:
 		for line in self.dataList:
 			criteriaList.append(self.getCriteria(line))
 		return criteriaList
-	
+
+test = ReadData()
