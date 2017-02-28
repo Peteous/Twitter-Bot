@@ -47,5 +47,3 @@ class ReadData:
 		for line in self.dataList:
 			criteriaList.append(self.getCriteria(line))
 		return criteriaList
-
-test = ReadData()
