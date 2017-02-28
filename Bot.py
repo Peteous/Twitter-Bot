@@ -69,10 +69,11 @@ except ImportError as e:
 __tweetList = []
 
 for index in range(len(actionList)-1):
-	if actionList[index] == 'user-timeline':
-		fav_counter = 0
-		rt_counter = 0
+	# Reset Counters at every loop iteration
+	fav_counter = 0
+	rt_counter = 0
 
+	if actionList[index] == 'user-timeline':
 		# Find 50 most recent tweets from user account and like & retweet them
 		for tweet in tweepy.Cursor(api.user_timeline, screen_name=criteriaList[index]).items(50):
 			if fav_counter >= 3 and rt_counter >= 3:
@@ -100,10 +101,6 @@ for index in range(len(actionList)-1):
 			except StopIteration:
 				break
 	elif actionList[index] == 'hashtag':
-		# Reset Counters
-		rt_counter = 0
-		fav_counter = 0
-
 		# Find 50 most recemt tweets containing hashtag and like & retweet them
 		for tweet in tweepy.Cursor(api.search, q=criteriaList[index]).items(50):
 			if fav_counter >= 3 and rt_counter >= 3:
@@ -136,6 +133,9 @@ for index in range(len(actionList)-1):
 	elif actionList[index] == 'search':
 		# Find 50 most recent tweets containing search term and like & retweet them
 		for tweet in tweepy.Cursor(api.search, q=criteriaList[index]).items(50):
+			if fav_counter >= 10 and rt_counter >= 10:
+				print("You're all caught up on that search")
+				break
 			try:
 				if not tweet.user.screen_name == user.screen_name:
 					print('\nTweet by: @' + tweet.user.screen_name)
