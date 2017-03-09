@@ -74,131 +74,133 @@ for index in range(len(actionList)-1):
 	rt_counter = 0
 
 	if actionList[index] == 'user-timeline':
+		print('In user-following section for user: @' + criteriaList[index])
 		# Find 50 most recent tweets from user account and like & retweet them
 		for tweet in tweepy.Cursor(api.user_timeline, screen_name=criteriaList[index]).items(50):
 			if fav_counter >= 3 and rt_counter >= 3:
-				print("You're all caught up on this user's timeline")
 				break
-			try:
-				print('\nTweet from @' + tweet.user.screen_name)
-				if not tweet.favorited:
-					api.create_favorite(tweet.id)
-					print('Favorited tweet')
-				else:
-					fav_counter+=1
-					print('Tweet already favorited')
-				if not tweet.retweeted:
-					api.retweet(tweet.id)
-					print('Retweeted tweet')
-				else:
-					rt_counter+=1
-					print('Tweet already retweeted')
-				time.sleep(5)
-			except Exception as e:
-				print(e.reason)
-				print('\nCheck out your handywork!')
-				webbrowser.open(_URL)
-			except StopIteration:
-				break
+			if not tweet.text.startswith('@'):
+				try:
+					if not tweet.favorited:
+						api.create_favorite(tweet.id)
+					else:
+						fav_counter+=1
+					if not tweet.retweeted:
+						api.retweet(tweet.id)
+					else:
+						rt_counter+=1
+					time.sleep(25)
+				except tweepy.error.TweepError as e:
+					print(e.reason)
+					time.sleep(25)
+				except tweepy.error.RateLimitError as r:
+					print('Rate limited. Waiting')
+					time.sleep(200)
+				except StopIteration:
+					break
+			else:
+				time.sleep(25)
+
 	elif actionList[index] == 'hashtag':
+		print('In hashtag-following section for hashtag ' + criteriaList[index])
+		query = criteriaList[index] + ' filter:safe :)'
 		# Find 50 most recemt tweets containing hashtag and like & retweet them
-		for tweet in tweepy.Cursor(api.search, q=criteriaList[index]).items(50):
-			if fav_counter >= 3 and rt_counter >= 3:
-				print("You're all caught up on that hashtag")
+		for tweet in tweepy.Cursor(api.search, q=query, lang="en").items(50):
+			if fav_counter >= 5 and rt_counter >= 5:
 				break
 			try:
-				if not tweet.user.screen_name == user.screen_name:
-					print('\nTweet by: @' + tweet.user.screen_name)
+				if not tweet.user.screen_name == user.screen_name and not tweet.text.startswith('@'):
 					if not tweet.retweeted:
 						tweet.retweet()
-						print('Retweeted the tweet')
 					else:
-						print('Tweet already retweeted')
+						rt_counter += 1
 					if not tweet.favorited:
 						tweet.favorite()
-						print('Favorited the tweet')
 					else:
-						print('Tweet already favorited')
-					time.sleep(5)
+						fav_counter += 1
+					time.sleep(25)
 				else:
-					print('\nYou found your tweet. Consider it ignored.')
-					time.sleep(5)
-			except tweepy.TweepError as e:
+					time.sleep(25)
+			except tweepy.error.TweepError as e:
 				print(e.reason)
+				time.sleep(25)
+			except tweepy.error.RateLimitError as r:
+				print('Rate limited. Waiting')
+				time.sleep(200)
 			except StopIteration:
-				print('\nCheck out your handywork!')
-				webbrowser.open(_URL)
 				break
 
 	elif actionList[index] == 'search':
+		print('In search-following section for search: ' + criteriaList[index])
+		query = criteriaList[index] + ' filter:safe :)'
 		# Find 50 most recent tweets containing search term and like & retweet them
-		for tweet in tweepy.Cursor(api.search, q=criteriaList[index]).items(50):
+		for tweet in tweepy.Cursor(api.search, q=query, lang="en").items(50):
 			if fav_counter >= 10 and rt_counter >= 10:
-				print("You're all caught up on that search")
 				break
 			try:
-				if not tweet.user.screen_name == user.screen_name:
-					print('\nTweet by: @' + tweet.user.screen_name)
+				if not tweet.user.screen_name == user.screen_name and not tweet.text.startswith('@'):
 					if not tweet.retweeted:
 						tweet.retweet()
-						print('Retweeted the tweet')
 					else:
-						print('Tweet already retweeted')
+						rt_counter += 1
 					if not tweet.favorited:
 						tweet.favorite()
-						print('Favorited the tweet')
 					else:
-						print('Tweet already favorited')
-					time.sleep(5)
+						fav_counter += 1
+					time.sleep(25)
 				else:
-					print('\nYou found your tweet. Consider it ignored.')
-					time.sleep(5)
-			except tweepy.TweepError as e:
+					time.sleep(25)
+			except tweepy.error.TweepError as e:
 				print(e.reason)
+				time.sleep(25)
+			except tweepy.error.RateLimitError as r:
+				print('Rate limited. Waiting')
+				time.sleep(200)
 			except StopIteration:
-				print('\nCheck out your handywork!')
-				webbrowser.open(_URL)
 				break
 
 	elif actionList[index] == 'tweet':
 		__tweetList.append(criteriaList[index])
-		time.sleep(5)
+		time.sleep(20)
 
-# Find 100 most recent tweets in your main timeline and like & retweet them
-for tweet in tweepy.Cursor(api.home_timeline).items(100):
+# Reset Counters
+fav_counter = 0
+rt_counter = 0
+# Find 50 most recent tweets in your main timeline and like & retweet them
+print('In main timeline section')
+for tweet in tweepy.Cursor(api.home_timeline).items(50):
 	try:
-		if not tweet.user.screen_name == user.screen_name:
-			print('\nTweet in timeline by: @' + tweet.user.screen_name)
-			if not tweet.favorited:
-				api.create_favorite(tweet.id)
-				print('Favorited tweet')
-			else:
-				print('Tweet already favorited')
-			if not tweet.retweeted:
-				api.retweet(tweet.id)
-				print('Retweeted tweet')
-			else:
-				print('Tweet already retweeted')
-			time.sleep(5)
-		else:
-			print('\nTweet in timeline by: @' + tweet.user.screen_name)
-			print('This is your own tweet')
-	except Exception as e:
+		if not fav_counter >= 30 and not rt_counter >= 30:
+			if not tweet.user.screen_name == user.screen_name and not tweet.text.startswith('@'):
+				if not tweet.favorited:
+					api.create_favorite(tweet.id)
+				else:
+					fav_counter += 1
+				if not tweet.retweeted:
+					api.retweet(tweet.id)
+				else:
+					rt_counter += 1
+				time.sleep(25)
+	except tweepy.error.TweepError as e:
 		print(e.reason)
+		time.sleep(25)
+	except tweepy.error.RateLimitError as r:
+		print('Rate limited. Waiting')
+		time.sleep(200)
 	except StopIteration:
-		print('\nCheck out your handywork!')
-		webbrowser.open(_URL)
 		break
 
 # try to tweet from __tweetList
 try:
+	print('In Tweeting section')
 	string = __tweetList[randint(0,len(__tweetList)-1)]
 	api.update_status(string)
-	print('\n'+'Just tweeted: '+string)
-	time.sleep(5)
+	time.sleep(25)
 except tweepy.error.TweepError:
-	print('\nJust tried fo tweet: ' + string)
-	print('That tweet has already been tweeted')
+	time.sleep(25)
+except tweepy.error.RateLimitError:
+	print('Rate limited. Waiting')
+	time.sleep(200)
 
 print('\nCheck out your handywork!')
 webbrowser.open(_URL)
